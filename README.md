@@ -3,18 +3,18 @@ https://speakerdeck.com/stevekinney/react-state
 ### Introduction
 * The main job of React is to take your application state and turn it into DOM nodes.
 * There are many kinds of states:
-    * Model data: The nouns in your application.
-    * View/UI state: Are those nouns sorted in ascending or descending order?
-    * Session state: Is the user even logged in?
-    * Communication: Are we in the process of fetching the nouns from the server?
-    * Location: Where are we in the application? Which nouns are we looking at?
+    * **Model data**: The nouns in your application.
+    * **View/UI state**: Are those nouns sorted in ascending or descending order?
+    * **Session state**: Is the user even logged in?
+    * **Communication**: Are we in the process of fetching the nouns from the server?
+    * **Location**: Where are we in the application? Which nouns are we looking at?
 * Or it might make sense to think about state relative to time:
-    * Model state: This is likely the data in your application. This could be the item in a given list.
-    * Ephemeral state: Stuff like the value of an input field that will be wiped away when you hit enter. This could be the order in which a given list is sorted.
+    * **Model state**: This is likely the data in your application. This could be the item in a given list.
+    * **Ephemeral state**: Stuff like the value of an input field that will be wiped away when you hit enter. This could be the order in which a given list is sorted.
 
 
 ### Class-Based State
-* this.setState() is asynchronous 
+* **this.setState()** is asynchronous 
 `increment = () => {
     this.setState({ count: this.state.count + 1 });
     this.setState({ count: this.state.count + 1 });
@@ -29,7 +29,7 @@ https://speakerdeck.com/stevekinney/react-state
     ...yourSecondCallToSetState,
     ...yourThirdCallToSetState,
 };`
-* the argument of this.setState() can be a function
+* the argument of **this.setState()** can be a function
     * the count after the increment call is 3
     * when a function is passed to this.setState(), it plays through each of them
 `increment = () => {
@@ -45,7 +45,7 @@ https://speakerdeck.com/stevekinney/react-state
         return { count: state.count + step };
     });
 };`
-* this.setState() can have a second argument as callback function, which is called after the state has been updated
+* **this.setState()** can have a second argument as callback function, which is called after the state has been updated
 `// max = 15, step = 5
 increment = () => {
     this.setState(
@@ -170,8 +170,8 @@ class Item extends Component {
 
 
 ### Hooks State
-* useState()
-    * set function in useState() is asynchronous, the count after the increment call is 1
+* **useState()**
+    * set function in **useState()** is asynchronous, the count after the increment call is 1
 `const [count, setCount] = useState(0);
 const increment = () => {
     setCount(count + 1);
@@ -179,22 +179,22 @@ const increment = () => {
     setCount(count + 1);
     console.log(count); // async, count = 0
 };`
-    * the argument of set function in useState() can be a function
+    * the argument of set function in **useState()** can be a function
         * the count after the increment call is 3
-        * the set function doesn’t have props as second argument, this is different from setState() 
+        * the set function doesn’t have props as second argument, this is different from **setState()**
 `const increment = () => {
     setCount((count) => count + 1);
     setCount((count) => count + 1);
     setCount((count) => count + 1);
 };`
-        * always return the value, this is different from setState()
+        * always return the value, this is different from **setState()**
 `const increment = () => {
     setCount((count) => {
         if (count >= max) return count; // always return count
         return count + step;
     });
 };`
-* useEffect()
+* **useEffect()**
     * dependencies
 `// dependency: invoke the callback every time the component re-renders
 useEffect(() => {
@@ -209,8 +209,8 @@ useEffect(() => {
     document.title = `Counter: ${count}`;
 }, [count]);`
     * differences with componentDidUpdate
-        * componentDidUpdate reference to the same state and props
-        * useEffect gets a copy of the state and props
+        * **componentDidUpdate** reference to the same state and props
+        * **useEffect** gets a copy of the state and props
 `componentDidUpdate() {
     setTimeout(() => {
         console.log(this.state.count); // if click increment 5 times, it will log `5 5 5 5 5`
@@ -230,7 +230,7 @@ useEffect(() => {
 
     return () => clearTimeout(countTimeout);
 }, [count]);`
-* useRef(): ability to reference to previous value
+* **useRef()**: ability to reference to previous value
 `let message;
 if (cuntRef.current < count) message = 'Higher';
 if (cuntRef.current > count) message = 'Lower';
@@ -238,7 +238,7 @@ cuntRef.current = count;`
 
 
 ### Reducers
-* useReducer(): it allows you to create interfaces where you can pass in the mechanics about how to update state
+* **useReducer()**: it allows you to create interfaces where you can pass in the mechanics about how to update state
 `const GRUDGE_ADD = 'GRUDGE_ADD';
 const GRUDGE_FORGIVE = 'GRUDGE_FORGIVE';
 
@@ -277,10 +277,10 @@ const Application = () => {
         });
     };
 };`
-* memo(): takes a function component and return one that if it receives the same props, just don’t render it
+* **memo()**: takes a function component and return one that if it receives the same props, just don’t render it
 `const Grudge = memo(({ grudge, onForgive }) => {});
 const NewGrudge = memo(({ onSubmit }) => {});`
-* useCallback(): returns its function when the dependencies change
+* **useCallback()**: returns its function when the dependencies change
     * useCallback(fn, deps)
 `const addGrudge = useCallback(
     ({ person, reason }) => {
@@ -296,7 +296,7 @@ const NewGrudge = memo(({ onSubmit }) => {});`
     },
     [dispatch]
 );`
-* useMemo(): calls its function and returns the result when the dependencies change
+* **useMemo()**: calls its function and returns the result when the dependencies change
     * useMemo(() => fn, deps)
 `const toggleForgiveness = useMemo(
     () => (id) => {
@@ -310,7 +310,7 @@ const NewGrudge = memo(({ onSubmit }) => {});`
 
 
 Context
-* Context provides a way to pass data through the component tree without having to pass props down manually at every level
+* **Context** provides a way to pass data through the component tree without having to pass props down manually at every level
 
 `export const GrudgeContext = createContext();
 
@@ -353,8 +353,8 @@ export const GrudgeProvider = ({ children }) => {
 
 
 
-`Data Fetching
-const initialState = {
+### Data Fetching
+`const initialState = {
     result: null,
     loading: true,
     error: null,
@@ -437,8 +437,8 @@ ReactDOM.render(
     rootElement,
 );`
 
-Thunks
-* thunk: a function returned from another function
+### Thunks
+* *thunk*: a function returned from another function
     * Why we need it? The major idea behind a thunk is that it’s code to be executed later, but reducers only accept objects as actions.
 `function definitelyNotAThunk() {
     return function aThunk() {
