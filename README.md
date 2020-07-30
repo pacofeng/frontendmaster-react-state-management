@@ -14,13 +14,15 @@ https://speakerdeck.com/stevekinney/react-state
 
 
 ### Class-Based State
-* **this.setState()** is asynchronous 
-`increment = () => {
-    this.setState({ count: this.state.count + 1 });
-    this.setState({ count: this.state.count + 1 });
-    this.setState({ count: this.state.count + 1 });
-    console.log(this.state.count); // 0
-};`
+* **this.setState()** is asynchronous
+`
+increment = () => { 
+   this.setState({ count: this.state.count + 1 }); 
+   this.setState({ count: this.state.count + 1 }); 
+   this.setState({ count: this.state.count + 1 }); 
+   console.log(this.state.count); // 0 
+};
+`
 * React is trying to avoid unnecessary render
     * the count after the increment call is 1
     * React will batch them up, figure out the result and then efficiently make that change
